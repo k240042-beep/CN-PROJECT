@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 import database
+import realtime
 
 app = Flask(__name__)
 app.secret_key = "change-this-to-any-random-text"   # needed for sessions
 
 database.init_db()   # create the tables when the server starts
+realtime.init_app(app)
 
 
 @app.route("/")
@@ -77,4 +79,4 @@ def logout():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    realtime.run(app)

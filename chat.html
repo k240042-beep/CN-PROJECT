@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Chat Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='chat.css') }}">
+</head>
+<body>
+<div class="app">
+
+    <div class="sidebar">
+        <h3>Online Users</h3>
+        <ul id="online-list"></ul>
+        <a class="logout" href="{{ url_for('logout') }}">Logout</a>
+    </div>
+
+    <div class="main">
+        <div class="header">Group Chat &mdash; logged in as <b>{{ username }}</b></div>
+
+        <div id="messages" class="messages-area"></div>
+
+        <div id="typing" class="typing"></div>
+
+        <form id="chat-form" class="input-bar" method="POST" action="{{ url_for('send') }}">
+            <input id="message-input" type="text" name="message"
+                   placeholder="Type a message" autocomplete="off" required>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+
+</div>
+
+<script>
+    const CURRENT_USER = {{ username|tojson }};
+    const HISTORY = {{ history|tojson }};
+</script>
+<script src="{{ url_for('static', filename='chat.js') }}"></script>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='realtime.js') }}"></script>
+</body>
+</html>
